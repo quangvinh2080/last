@@ -33,6 +33,16 @@ function layoutReducer(state, action) {
         isShowSignupModal: false,
         isShowSigninModal: true,
       };
+    case 'LOGGED_IN':
+      return {
+        ...state,
+        isAuth: true,
+      };
+    case 'LOGGED_OUT':
+      return {
+        ...state,
+        isAuth: false,
+      };
     default:
       return state;
   }
