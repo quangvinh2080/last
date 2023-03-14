@@ -2,7 +2,7 @@
 
 Task reminders, measure by the last time you did them
 
-![image](https://user-images.githubusercontent.com/9901814/224982210-1571f843-67fa-415d-97d4-9a93523662d2.png)
+![image](https://user-images.githubusercontent.com/9901814/224982609-29fefdfc-2e07-4bdb-8413-729b28c2b191.png)
 
 
 ## Setup
