@@ -1,5 +1,6 @@
+from datetime import date
 from bson import ObjectId
-
+from typing import Optional
 from pydantic import EmailStr, Field, BaseModel, validator
 
 from email_validator import validate_email, EmailNotValidError
@@ -39,7 +40,19 @@ class UserBase(MongoBaseModel):
       return email
     except EmailNotValidError as e:
       raise EmailNotValidError
+  
+class TaskBase(MongoBaseModel):
+  name: str = Field(...)
+  description: str = Field(...)
+  expected_days: int = Field(...)
+  latest_date: date = Field(...)
+  user_id: Optional[PyObjectId] = None
 
+class TaskUpdate(MongoBaseModel):
+  name: Optional[str] = None
+  description: Optional[str] = None
+  expected_days: Optional[int] = None
+  latest_date: Optional[str] = None
 
 class LoginBase(BaseModel):
   email: str = EmailStr(...)

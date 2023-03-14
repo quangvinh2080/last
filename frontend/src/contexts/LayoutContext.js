@@ -6,20 +6,26 @@ const LayoutDispatchContext = createContext();
 const initialState = {
   isShowSigninModal: false,
   isShowSignupModal: false,
+  isShowAddTaskModal: false,
   isAuth: false,
 };
 
 function layoutReducer(state, action) {
   switch (action.type) {
-    case 'HIDE_SIGNIN_MODAL':
+    case 'HIDE_SIGNIN':
       return {
         ...state,
         isShowSigninModal: false,
       };
-    case 'HIDE_SIGNUP_MODAL':
+    case 'HIDE_SIGNUP':
       return {
         ...state,
         isShowSignupModal: false,
+      };
+    case 'HIDE_ADD_LAST_ITEM':
+      return {
+        ...state,
+        isShowAddTaskModal: false,
       };
     case 'SHOW_SIGNUP':
       return {
@@ -32,6 +38,11 @@ function layoutReducer(state, action) {
         ...state,
         isShowSignupModal: false,
         isShowSigninModal: true,
+      };
+    case 'SHOW_ADD_TASK':
+      return {
+        ...state,
+        isShowAddTaskModal: true,
       };
     case 'LOGGED_IN':
       return {
@@ -71,7 +82,7 @@ function useLayoutState() {
 function useLayoutDispatch() {
   const context = useContext(LayoutDispatchContext);
   if (context === undefined) {
-    throw new Error('useLayoutState must be used within a LayoutProvider');
+    throw new Error('useLayoutDispatch must be used within a LayoutProvider');
   }
   return context;
 }

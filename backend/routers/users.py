@@ -1,3 +1,4 @@
+from decouple import config
 from datetime import datetime, timedelta;
 from fastapi import APIRouter, Request, Body, status, HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
@@ -56,9 +57,8 @@ async def login(request: Request, loginUser: LoginBase = Body(...)) -> str:
 		raise HTTPException(status_code=401, detail="Invalid email and/or password")
 	token = auth_handler.encode_token(user["_id"])
 	response = JSONResponse(content={"token": token})
-	tokenDays = 365
 
-	response.set_cookie(key="token", value=token, max_age=3600 * 1000 * 24 * tokenDays, expires=(datetime.now() + timedelta(days=tokenDays)).isoformat())
+	response.set_cookie(key="token", value=token, max_age=60 * 60 * 24 * config('TOKEN_EXPIRED_DAYS', cast=int), expires=(datetime.now() + timedelta(days=config('TOKEN_EXPIRED_DAYS', cast=int))).isoformat(), samesite="none", secure=True)
 
 	return response
 

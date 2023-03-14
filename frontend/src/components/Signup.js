@@ -8,19 +8,23 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { isShowSignupModal } = useLayoutState();
   const layoutDispatch = useLayoutDispatch();
 
   const handleRegister = async () => {
     setErrMsg('');
+    setIsLoading(true);
 
     if (!email || !password || !confirmPassword) {
       setErrMsg('Email or password can not be empty');
+      setIsLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
       setErrMsg('Password doesn\'t match');
+      setIsLoading(false);
       return;
     }
 
@@ -32,13 +36,15 @@ const Signup = () => {
 
       if (status >= 400 && data?.detail) {
         setErrMsg(data.detail);
+        setIsLoading(false);
         return;
       }
-
-      layoutDispatch({ type: 'HIDE_SIGNUP_MODAL' });
+      setIsLoading(false);
+      layoutDispatch({ type: 'HIDE_SIGNUP' });
     } catch (err) {
       console.error(err);
       setErrMsg('Unknown error, please try again later');
+      setIsLoading(false);
     }
   };
 
@@ -47,7 +53,7 @@ const Signup = () => {
       <Modal.Header className="font-bold mb-4">
         <h3 className="font-semibold text-2xl text-gray-800">Sign Up</h3>
         <p className="text-gray-500">Just 5 seconds, sign up to retain your data</p>
-        <label className="btn btn-outline btn-sm btn-circle absolute right-5 top-5" onClick={() => layoutDispatch({ type: 'HIDE_SIGNUP_MODAL' })}>✕</label>
+        <label className="btn btn-outline btn-sm btn-circle absolute right-5 top-5" onClick={() => layoutDispatch({ type: 'HIDE_SIGNUP' })}>✕</label>
       </Modal.Header>
 
       <Modal.Body>
@@ -79,7 +85,7 @@ const Signup = () => {
             </div>
           </div>)}
           <div className="space-y-2">
-            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleRegister()}>
+            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleRegister()} loading={isLoading}>
               Sign up
             </Button>
           </div>

@@ -6,6 +6,7 @@ import { login } from '../services/api';
 const Login = () => {
   const [errMsg, setErrMsg] = useState();
   const [email, setEmail] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState();
   const { isShowSigninModal } = useLayoutState();
   const layoutDispatch = useLayoutDispatch();
@@ -13,17 +14,20 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setErrMsg('');
+      setIsLoading(true);
       const { data, status } = await login({ email, password }) ;
 
       if (status >= 400 && data?.detail) {
         setErrMsg(data.detail);
+        setIsLoading(false);
         return;
       }
 
-      layoutDispatch({ type: 'HIDE_SIGNIN_MODAL' });
+      layoutDispatch({ type: 'HIDE_SIGNIN' });
       layoutDispatch({ type: 'LOGGED_IN' });
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
       setErrMsg('Unknown error, please try again later');
     }
   };
@@ -33,7 +37,7 @@ const Login = () => {
       <Modal.Header className="font-bold mb-4">
         <h3 className="font-semibold text-2xl text-gray-800">Sign In </h3>
         <p className="text-gray-500">Please sign in to your account.</p>
-        <label className="btn btn-outline btn-sm btn-circle absolute right-5 top-5" onClick={() => layoutDispatch({ type: 'HIDE_SIGNIN_MODAL' })}>✕</label>
+        <label className="btn btn-outline btn-sm btn-circle absolute right-5 top-5" onClick={() => layoutDispatch({ type: 'HIDE_SIGNIN' })}>✕</label>
       </Modal.Header>
 
       <Modal.Body>
@@ -66,7 +70,7 @@ const Login = () => {
             </div>
           </div>)}
           <div className="space-y-2">
-            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleLogin()}>
+            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleLogin()} loading={isLoading}>
               Sign in
             </Button>
           </div>

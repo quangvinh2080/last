@@ -42,3 +42,48 @@ export const register = ({ email, password }) => {
     }
   });
 };
+
+export const getTasks = () => {
+  const token = Cookies.get('token');
+  const URL = `${API_URL}/tasks`;
+  return axios.get(URL, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+export const addTask = ({ name, description, expected_days, latest_date }) => {
+  const token = Cookies.get('token');
+  const URL = `${API_URL}/tasks`;
+  return axios.post(URL, {
+    name,
+    description,
+    expected_days,
+    latest_date,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+export const updateTask = (id, params) => {
+  const token = Cookies.get('token');
+  const URL = `${API_URL}/tasks/${id}`;
+  return axios.patch(URL, params, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+export const deleteTask = (id) => {
+  const token = Cookies.get('token');
+  const URL = `${API_URL}/tasks/${id}`;
+  return axios.delete(URL, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
