@@ -48,10 +48,10 @@ const ConfirmRenewTask = ({ task, open, onClose }) => {
           </div>)}
           <div className="space-y-2 text-right">
             <ButtonGroup>
-              <Button className="w-20" type="submit" active onClick={() => handleRenew()} loading={isLoading}>
+              <Button className="w-20" type="submit" active onClick={() => handleRenew()} loading={isLoading} disabled={isLoading}>
                 Yes
               </Button>
-              <Button className="w-20" type="submit" onClick={() => onClose()}>
+              <Button className="w-20" type="submit" onClick={() => onClose()} disabled={isLoading}>
                 No
               </Button>
             </ButtonGroup>

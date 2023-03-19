@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from routers.users import router as users_router
 from routers.tasks import router as tasks_router
+from routers.googlesheets import router as googlesheets_router
 
 DB_URL = config('DB_URL', cast=str)
 DB_NAME = config('DB_NAME', cast=str)
@@ -36,4 +37,5 @@ async def shutdown_db_client():
 
 app.include_router(users_router, prefix="/users", tags=["users"])
 app.include_router(tasks_router, prefix="/tasks", tags=["tasks"])
+app.include_router(googlesheets_router, prefix="/googlesheets", tags=["googlesheets"])
 

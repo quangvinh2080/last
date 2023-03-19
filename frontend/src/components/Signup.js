@@ -85,7 +85,7 @@ const Signup = () => {
             </div>
           </div>)}
           <div className="space-y-2">
-            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleRegister()} loading={isLoading}>
+            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleRegister()} loading={isLoading} disabled={isLoading}>
               Sign up
             </Button>
           </div>

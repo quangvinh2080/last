@@ -5,6 +5,7 @@ import { getTasks, info } from '../services/api';
 import AddTask from '../components/AddTask';
 import { useTaskDispatch, useTaskState } from '../contexts/TaskContext';
 import Task from '../components/Task';
+import GoogleSheetsIntegration from '../components/GoogleSheetsIntegration';
 
 const Homepage = () => {
   const layoutDispatch = useLayoutDispatch();
@@ -34,10 +35,10 @@ const Homepage = () => {
     }
   }, [isAuth]);
 
-  return (
+return (
     <div className="m-5 space-y-5">
       <div className="flex justify-end">
-        <button className="btn btn-ghost btn-outline mr-2">
+        <button className="btn btn-ghost btn-outline mr-2" onClick={() => layoutDispatch({ type: 'SHOW_INTEGRATION' })}>
           <Box />
           <span className="pl-2">Integration</span>
         </button>
@@ -54,6 +55,7 @@ const Homepage = () => {
       </div>
       {/* Modals */}
       <AddTask />
+      <GoogleSheetsIntegration />
     </div>
   )
 }

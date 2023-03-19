@@ -7,6 +7,8 @@ const initialState = {
   isShowSigninModal: false,
   isShowSignupModal: false,
   isShowAddTaskModal: false,
+  isShowIntegration: false,
+  isShowGoogleSheetsIntegration: false,
   isAuth: false,
 };
 
@@ -25,7 +27,17 @@ function layoutReducer(state, action) {
     case 'HIDE_ADD_LAST_ITEM':
       return {
         ...state,
-        isShowAddTaskModal: false,
+        isShowAddTaskModal: false,  
+      };
+    case 'HIDE_INTEGRATION':
+      return {
+        ...state,
+        isShowIntegration: false,
+      };
+    case 'HIDE_GOOGLE_SHEETS_INTEGRATION':
+      return {
+        ...state,
+        isShowGoogleSheetsIntegration: false,
       };
     case 'SHOW_SIGNUP':
       return {
@@ -43,6 +55,16 @@ function layoutReducer(state, action) {
       return {
         ...state,
         isShowAddTaskModal: true,
+      };
+    case 'SHOW_INTEGRATION':
+      return {
+        ...state,
+        isShowIntegration: true,
+      };
+    case 'SHOW_GOOGLE_SHEETS_INTEGRATION':
+      return {
+        ...state,
+        isShowGoogleSheetsIntegration: true,
       };
     case 'LOGGED_IN':
       return {

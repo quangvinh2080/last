@@ -61,3 +61,17 @@ class LoginBase(BaseModel):
 
 class CurrentUser(BaseModel):
   email: str = EmailStr(...)
+
+class GoogleSheetsBase(MongoBaseModel):
+  spreadsheet_id: str = None
+  user_id: PyObjectId = None
+
+class PermissionFormBase(BaseModel):
+  email: str = None
+  @validator("email")
+  def valid_email(cls, v):
+    try:
+      email = validate_email(v).email
+      return email
+    except EmailNotValidError as e:
+      raise EmailNotValidError

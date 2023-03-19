@@ -87,3 +87,25 @@ export const deleteTask = (id) => {
     }
   });
 };
+
+export const getGoogleSheetsIntegration = () => {
+  const token = Cookies.get('token'); 
+  const URL = `${API_URL}/googlesheets`;
+  return axios.get(URL, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const sharePermission = (email) => {
+  const token = Cookies.get('token'); 
+  const URL = `${API_URL}/googlesheets/share_permission`;
+  return axios.post(URL, {
+    email
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

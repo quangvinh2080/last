@@ -56,15 +56,15 @@ const UpdateTask = ({ task, open, onClose }) => {
         <div className="space-y-5">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 tracking-wide flex items-center">Task name <Tooltip message="Name your task, task is whatever you already did and you want me to remind you about that task after expected days" position="right"><Info className="ml-2" size={16} /></Tooltip></label> 
-            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter item name" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter item name" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 tracking-wide flex items-center">Task description <Tooltip message="You can add more information about your task" position="right"><Info className="ml-2" size={16} /></Tooltip></label> 
-            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter item name" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter item name" value={description} onChange={(e) => setDescription(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 tracking-wide  flex items-center">Expected days <Tooltip message="After expected days has passed, I will remind you" position="right"><Info className="ml-2" size={16} /></Tooltip></label>
-            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter expect days" value={expectDays} onChange={(e) => setExpectDays(e.target.value)} />
+            <Input color="ghost" bordered className="w-full content-center text-base px-4 py-2 rounded-lg" placeholder="Enter expect days" value={expectDays} onChange={(e) => setExpectDays(e.target.value)} disabled={isLoading} />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 tracking-wide  flex items-center">Latest date <Tooltip message="The day that is the last time you did it" position="right"><Info className="ml-2" size={16} /></Tooltip></label>
@@ -72,7 +72,8 @@ const UpdateTask = ({ task, open, onClose }) => {
             <Datepicker
               inputClassName="input w-full content-center text-base px-4 py-2 rounded-lg input-ghost focus:outline-offset-0 input-bordered"
               asSingle={true} 
-              value={latestDate} 
+              value={latestDate}
+              disabled={isLoading} 
               onChange={handleLastestDateChange} 
             /> 
           </div>
@@ -87,7 +88,7 @@ const UpdateTask = ({ task, open, onClose }) => {
             </div>
           </div>)}
           <div className="space-y-2">
-            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleUpdateTask()} loading={isLoading}>
+            <Button color="primary" type="submit" shape="circle" fullWidth onClick={() => handleUpdateTask()} loading={isLoading} disabled={isLoading}>
               Update
             </Button>
           </div>
