@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLayoutDispatch, useLayoutState } from '../contexts/LayoutContext';
 import { Plus, Box } from 'react-feather';
-import { getTasks, info } from '../services/api';
-import AddTask from '../components/AddTask';
+import { useUser, useTasks } from '../hooks/swr';
 import { useTaskDispatch, useTaskState } from '../contexts/TaskContext';
 import Task from '../components/Task';
+import AddTask from '../components/AddTask';
 import GoogleSheetsIntegration from '../components/GoogleSheetsIntegration';
 
 const Homepage = () => {
@@ -12,41 +12,43 @@ const Homepage = () => {
   const taskDispatch = useTaskDispatch();
   const { tasks } = useTaskState();
   const { isAuth } = useLayoutState();
-  
+  const { data: fetchedTasks } = useTasks();
+  const { data: user } = useUser();
+
   async function initializeApp() {
-    const { data: user } = await info();
-    if (user.id) {
+    if (user?.id) {
       layoutDispatch({ type: 'LOGGED_IN' });
     }
   }
 
   async function initializeTasks() {
-    const { data: initialTasks } = await getTasks();
-    taskDispatch({ type: 'UPDATE_TASKS', value: initialTasks });
+    taskDispatch({ type: 'UPDATE_TASKS', value: fetchedTasks });
   }
 
   useEffect(() => {
     initializeApp();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    if (isAuth) {
+    if (isAuth && fetchedTasks?.length) {
       initializeTasks();
     }
-  }, [isAuth]);
+  }, [isAuth, fetchedTasks]);
 
 return (
     <div className="m-5 space-y-5">
-      <div className="flex justify-end">
-        <button className="btn btn-ghost btn-outline mr-2" onClick={() => layoutDispatch({ type: 'SHOW_INTEGRATION' })}>
-          <Box />
-          <span className="pl-2">Integration</span>
-        </button>
-        <button className="btn btn-ghost btn-outline" onClick={() => layoutDispatch({ type: 'SHOW_ADD_TASK' })}>
-          <Plus />
-          <span className="pl-2">Add</span>
-        </button>
-      </div>
+      {isAuth && (
+        <div className="flex justify-end">
+          <button className="btn btn-ghost btn-outline mr-2" onClick={() => layoutDispatch({ type: 'SHOW_INTEGRATION' })}>
+            <Box />
+            <span className="pl-2">Integration</span>
+          </button>
+          <button className="btn btn-ghost btn-outline" onClick={() => layoutDispatch({ type: 'SHOW_ADD_TASK' })}>
+            <Plus />
+            <span className="pl-2">Add</span>
+          </button>
+        </div>
+      )}
       {/* Content */}
       <div className="flex flex-wrap gap-5">
         {tasks.map((task) => (
