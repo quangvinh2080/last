@@ -13,7 +13,12 @@ const ConfirmRenewTask = ({ task, open, onClose }) => {
     try {
       setIsLoading(true);
       task.latest_date = dayjs().format('YYYY-MM-DD');
-      const { status } = await updateTask(task._id, task);
+      const { status } = await updateTask(task._id, {
+        name: task.name,
+        description: task.description,
+        expected_days: task.expected_days,
+        latest_date: task.latest_date,
+      });
       if (status === 200) {
         taskDispatch({ type: 'UPDATE_TASK', value: task });
         onClose();

@@ -20,7 +20,7 @@ export const login = async ({ email, password }) => {
   });
 };
 
-export const register = ({ email, password }) => {
+export const signup = ({ email, password }) => {
   const URL = `${API_URL}/users/register`;
 
   return axiosWithCredentials.post(URL, {

@@ -129,6 +129,8 @@ async def update_task(
       ""
     ]], raw=False)
 
+    task["_id"] = int(id)
+
     return JSONResponse(status_code=status.HTTP_200_OK, content=task)
 
 @router.delete("/{id}", response_description="Delete task")
