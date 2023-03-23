@@ -35,7 +35,7 @@ async def startup_db_client():
 async def shutdown_db_client():
   app.mongodb_client.close()
 
-app.include_router(users_router, prefix="/users", tags=["users"])
-app.include_router(tasks_router, prefix="/tasks", tags=["tasks"])
-app.include_router(googlesheets_router, prefix="/googlesheets", tags=["googlesheets"])
+app.include_router(users_router, prefix="/api/users", tags=["users"])
+app.include_router(tasks_router, prefix="/api/tasks", tags=["tasks"])
+app.include_router(googlesheets_router, prefix="/api/googlesheets", tags=["googlesheets"])
 

@@ -8,7 +8,7 @@ const axiosWithCredentials = axios.create({
 });
 
 export const login = async ({ email, password }) => {
-  const URL = `${API_URL}/users/login`;
+  const URL = `${API_URL}/api/users/login`;
 
   return axiosWithCredentials.post(URL, {
     email,
@@ -21,7 +21,7 @@ export const login = async ({ email, password }) => {
 };
 
 export const signup = ({ email, password }) => {
-  const URL = `${API_URL}/users/register`;
+  const URL = `${API_URL}/api/users/register`;
 
   return axiosWithCredentials.post(URL, {
     email,
@@ -36,7 +36,7 @@ export const signup = ({ email, password }) => {
 
 export const addTask = ({ name, description, expected_days, latest_date }) => {
   const token = Cookies.get('token');
-  const URL = `${API_URL}/tasks`;
+  const URL = `${API_URL}/api/tasks`;
   return axios.post(URL, {
     name,
     description,
@@ -51,7 +51,7 @@ export const addTask = ({ name, description, expected_days, latest_date }) => {
 
 export const updateTask = (id, params) => {
   const token = Cookies.get('token');
-  const URL = `${API_URL}/tasks/${id}`;
+  const URL = `${API_URL}/api/tasks/${id}`;
   return axios.patch(URL, params, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -61,7 +61,7 @@ export const updateTask = (id, params) => {
 
 export const deleteTask = (id) => {
   const token = Cookies.get('token');
-  const URL = `${API_URL}/tasks/${id}`;
+  const URL = `${API_URL}/api/tasks/${id}`;
   return axios.delete(URL, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -71,7 +71,7 @@ export const deleteTask = (id) => {
 
 export const getGoogleSheetsIntegration = () => {
   const token = Cookies.get('token'); 
-  const URL = `${API_URL}/googlesheets`;
+  const URL = `${API_URL}/api/googlesheets`;
   return axios.get(URL, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -81,7 +81,7 @@ export const getGoogleSheetsIntegration = () => {
 
 export const sharePermission = (email) => {
   const token = Cookies.get('token'); 
-  const URL = `${API_URL}/googlesheets/share_permission`;
+  const URL = `${API_URL}/api/googlesheets/share_permission`;
   return axios.post(URL, {
     email
   }, {

@@ -14,7 +14,7 @@ const fetcher = (url) => {
 }
 
 export const useUser = () => {
-  return useSWR(`${API_URL}/users/me`, fetcher, {
+  return useSWR(`${API_URL}/api/users/me`, fetcher, {
     onErrorRetry: (error) => {
       if (error.status >= 400) return;
     }
@@ -22,7 +22,7 @@ export const useUser = () => {
 };
 
 export const useTasks = () => {
-  return useSWR(`${API_URL}/tasks`, fetcher, {
+  return useSWR(`${API_URL}/api/tasks`, fetcher, {
     onErrorRetry: (error) => {
       if (error.status >= 400) return;
     }
