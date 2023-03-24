@@ -3,6 +3,7 @@ import { useLayoutDispatch, useLayoutState } from '../contexts/LayoutContext';
 import { Plus, Box } from 'react-feather';
 import { useUser, useTasks } from '../hooks/swr';
 import { useTaskDispatch, useTaskState } from '../contexts/TaskContext';
+import { getRemainingDays } from '../services/utils';
 import Task from '../components/Task';
 import AddTask from '../components/AddTask';
 import GoogleSheetsIntegration from '../components/GoogleSheetsIntegration';
@@ -51,7 +52,9 @@ return (
       )}
       {/* Content */}
       <div className="flex flex-wrap gap-5">
-        {tasks.map((task) => (
+        {tasks.sort((task1, task2) => {
+          return getRemainingDays(task2) - getRemainingDays(task1);
+        }).map((task) => (
           <Task key={task._id} task={task} />
         ))}
       </div>
