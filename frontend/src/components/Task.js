@@ -4,6 +4,7 @@ import { Card, Button, Countdown } from 'react-daisyui';
 import ConfirmDeleteTask from '../components/ConfirmDeleteTask';
 import ConfirmRenewTask from '../components/ConfirmRenewTask';
 import UpdateTask from '../components/UpdateTask';
+import { getRemainingDays } from '../services/utils';
 
 const Task = ({ task }) => {
   const dayjsLatestDate = dayjs(task.latest_date, 'YYYY-MM-DD');
@@ -23,7 +24,7 @@ const Task = ({ task }) => {
   const setDuration = (dayjsExpectedDate) => {
     const duration = dayjs.duration(dayjsExpectedDate.diff(dayjs()));
     setYears(duration.years() > 0 ? duration.years() : undefined);
-    setMonths(duration.months());
+    setMonths(duration.months() > 0 ? duration.months() : undefined);
     setDays(duration.days());
     setHours(duration.hours());
     setMins(duration.minutes());
@@ -42,33 +43,33 @@ const Task = ({ task }) => {
 
   return (
     <>
-      <Card className="shadow-xl">
+      <Card className={`shadow-xl w-full sm:w-fit ${getRemainingDays(task) < 1 ? 'bg-gray-300' : ''}`}>
         <Card.Body className="text-left">
           <Card.Title tag="h2">{task.name}</Card.Title>
           <p>{task.description}</p>
           <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
             {years !== undefined ? (<div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={years} />
+              <Countdown className="font-mono text-5xl" value={years} />
               years
             </div>) : null}
             {months || years ? (<div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={months} />
+              <Countdown className="font-mono text-5xl" value={months} />
               months
             </div>) : null}
             <div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={days} />
+              <Countdown className="font-mono text-5xl" value={days} />
               days
             </div>
             <div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={hours} />
+              <Countdown className="font-mono text-5xl" value={hours} />
               hours
             </div>
-            <div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={mins} />
+            {years === undefined && <div className="flex flex-col">
+              <Countdown className="font-mono text-5xl" value={mins} />
               min
-            </div>
-            {years === undefined ? (<div className="flex flex-col">
-              <Countdown className="font-mono sm:text-xl md:text-4xl" value={secs} />
+            </div>}
+            {(years === undefined && months === undefined) ? (<div className="flex flex-col">
+              <Countdown className="font-mono text-5xl" value={secs} />
               sec
             </div>) : null}
           </div>
