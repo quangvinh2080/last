@@ -28,5 +28,5 @@ export const getDaysBetween = (fromDate, toDate) => {
 
 export const getRemainingDays = (task) => {
   const expectedDate = dayjs(task.latest_date, 'YYYY-MM-DD').add(task.expected_days, 'day');
-  return dayjs().diff(expectedDate, 'day');
+  return expectedDate.diff(dayjs(), 'day');
 };

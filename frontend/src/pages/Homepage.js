@@ -53,7 +53,7 @@ return (
       {/* Content */}
       <div className="flex flex-wrap gap-5">
         {tasks.sort((task1, task2) => {
-          return getRemainingDays(task2) - getRemainingDays(task1);
+          return getRemainingDays(task1) - getRemainingDays(task2);
         }).map((task) => (
           <Task key={task._id} task={task} />
         ))}
